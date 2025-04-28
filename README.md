@@ -28,7 +28,7 @@ Grammars are categorized based on their complexity and the types of languages th
 - Type 2 : Programming Languages (no ambiguity)
 - Type 3 : Identifiers
 
-\*In this context, we undertand amiguity as being able to generate multiple parse trees for the same input string, leading to uncertainty in the interpretation of the language.
+\*In this context, we undertand ambiguity as being able to generate multiple parse trees for the same input string, leading to uncertainty in the interpretation of the language.
 
 ### Context Free Grammars
 
@@ -51,7 +51,7 @@ T: { Bello, Papaya, Me, want, banana, bapple, Po }
 N: { Sentence, Phrase, Action, Noun, Greeting, Farewell }
 
 Once we have identified the core terminals and non-terminals of the language, we can define the production rules.
-The symbol '$\rightarrow$' means 'can be replaced by', and '|' means 'or'.
+
 
 For simplicity, I stablished the following rules:
 
