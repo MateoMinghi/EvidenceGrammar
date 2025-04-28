@@ -42,6 +42,16 @@ I chose the Minion Language, popularly known as Minionese, for my project. Minio
 
 There are several articles available analyzing Minionese in depth, for the puporses of this project, I'm basing my grammar on this article: https://despicableme.fandom.com/wiki/Minionese
 
+Examples:
+
+* Bello (Greeting)
+* Papaya (Farewell)
+* Me want banana (Request)
+* Me want bapple (Request)
+* Bello Po Me want banana
+* Me want bapple Po Papaya
+* Bello Po Me want banana Po Papaya
+
 **Minion Language Terminals (T):**
 
 T: { Bello, Papaya, Me, want, banana, bapple, Po }
