@@ -134,11 +134,11 @@ Phrase -> Phrase 'Po' Term | Term (Modified: Enforces left-associativity)
 Term -> Action (New rule)
 Action -> Greeting | Farewell | 'Me' 'want' Noun
 Greeting -> 'Bello'
-Farewell -> 'Poopaye'
+Farewell -> 'Papaya'
 Noun -> 'banana' | 'bapple'
 ```
 
-With this change, if we were to parse the same string "Bello Po Me want banana Po Poopaye", we would only get a single tree.
+With this change, if we were to parse the same string "Bello Po Me want banana Po Papaya", we would only get a single tree.
 
 In the context of computer science, Syntax Analysis or Parsing checks whether the given input is in the correct
 syntax. The main goal of syntax analysis is to create a parse tree. Once the parse tree is constructed, the compiler can perform semantic analysis to check if the source code makes sense and follows the semantics of the programming
@@ -203,11 +203,16 @@ Just for the love of the game, I also wrote a script using the Lark library, whi
 
 Further testing results can be found on both jupyter notebooks
 
-## Grammar Classification
 
-Based on the Chomsky Hierarchy described earlier, our grammar, before and after checking for ambiguity and left recursin, is classified as a **Context-Free Grammar (CFG)** or **Type 2 Grammar**.
+## Complexity Analysis
 
-This grammar allows us to formally define and parse sentences in the Minion language.
+### Before Cleaning the Grammar
+- The grammar is ambiguous and contains left recursion.
+- Based on the Chomsky hierarchy, it is still a Context-Free Grammar (CFG) or Type 2 Grammar, as it adheres to the rules of CFGs despite the ambiguity and left recursion.
+
+### After Cleaning the Grammar
+- The grammar is unambiguous and free of left recursion.
+- It remains as a Context-Free Grammar (CFG) or Type 2 Grammar, but it is now optimized for parsing, making it suitable for deterministic parsers like LL(1).
 
 ---
 
