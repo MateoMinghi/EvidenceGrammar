@@ -78,59 +78,49 @@ Sentence will be the starting point for generating any valid string in the langu
 
 The next step is to remove ambiguity. As I explained earlier, ambiguity is when we can generate multiple parse trees for the same input string. We must remove ambiguity to avoid confusion about the structure or meaning of that string. This is vital for compiler design.
 
-Based on our symbols and production rules, we can create a sentence like "Bello Po Me want banana Po Papaya". However, this string can be parsed in more than a single way, resulting in different syntactic trees
+Based on our symbols and production rules, we can create a sentence like "Bello Po Me want banana Po Papaya". However, this string can be parsed in more than a single way, resulting in different syntactic trees.
 
-Tree 1 (generated using chatgpt)
-
-```
-graph TD
-    subgraph Tree 1
-        S(Sentence) --> P1(Phrase)
-        P1 --> P2(Phrase)
-        P1 --> T1(Po)
-        P1 --> P3(Phrase)
-        P2 --> P4(Phrase)
-        P2 --> T2(Po)
-        P2 --> P5(Phrase)
-        P4 --> A1(Action)
-        A1 --> G(Greeting)
-        G --> T3(Bello)
-        P5 --> A2(Action)
-        A2 --> T4(Me)
-        A2 --> T5(want)
-        A2 --> N1(Noun)
-        N1 --> T6(banana)
-        P3 --> A3(Action)
-        A3 --> F(Farewell)
-        F --> T7(Papaya)
-    end
-```
-
-Tree 2 (generated using chatgpt)
+### Tree 1 - First Interpretation
 
 ```
-graph TD
-    subgraph Tree 2
-        S(Sentence) --> P1(Phrase)
-        P1 --> P2(Phrase)
-        P1 --> T1(Po)
-        P1 --> P3(Phrase)
-        P2 --> A1(Action)
-        A1 --> G(Greeting)
-        G --> T2(Bello)
-        P3 --> P4(Phrase)
-        P3 --> T3(Po)
-        P3 --> P5(Phrase)
-        P4 --> A2(Action)
-        A2 --> T4(Me)
-        A2 --> T5(want)
-        A2 --> N1(Noun)
-        N1 --> T6(banana)
-        P5 --> A3(Action)
-        A3 --> F(Farewell)
-        F --> T7(Papaya)
-    end
+Sentence
+    |
+  Phrase
+  /  |  \
+Phrase Po Phrase
+/  |  \      |
+Phrase Po Phrase  Action
+  |         |      |
+Action      Action Farewell
+  |        /  | \    |
+Greeting  Me want Noun Papaya
+  |              |
+Bello           banana
 ```
+
+In this interpretation, the first "Po" connects "Bello" with "Me want banana", and the second "Po" connects the entire first part with "Papaya".
+
+### Tree 2 - Alternative Interpretation
+
+```
+Sentence
+    |
+  Phrase
+  /  |  \
+Phrase Po Phrase
+  |      /  |  \
+Action  Phrase Po Phrase
+  |      |       |
+Greeting Action   Action
+  |     /  | \    |
+Bello  Me want Noun Farewell
+              |     |
+            banana  Papaya
+```
+
+In this interpretation, the first "Po" connects "Bello" directly with the rest of the sentence, and the second "Po" connects "Me want banana" with "Papaya".
+
+These different parse trees for the same input string demonstrate the ambiguity in our grammar. The sentence "Bello Po Me want banana Po Papaya" can be interpreted in more than one way.
 
 We can introduce an intermediate non-terminal to eliminate the ambiguity, and rewrite our production rules:
 
@@ -220,9 +210,15 @@ Further testing results can be found on both jupyter notebooks
 - The grammar is ambiguous and contains left recursion.
 - Based on the Chomsky hierarchy, it is still a Context-Free Grammar (CFG) or Type 2 Grammar, as it adheres to the rules of CFGs despite the ambiguity and left recursion.
 
+- Earley Parser O(n^3): in the worst case, O(^2) for unambiguous grammars, and O(n) for almost all LR(k) grammars, where n is the length of the input string. The presence of ambiguity and left recursion can lead to higher complexity in practice.
+- Recursive Descent Parser: Not guaranteed to terminate for left-recursive or ambiguous grammars; complexity is not well-defined and may result in infinite recursion or exponential time in the worst case.
+
 ### After Cleaning the Grammar
 - The grammar is unambiguous and free of left recursion.
 - It remains as a Context-Free Grammar (CFG) or Type 2 Grammar, but it is now optimized for parsing, making it suitable for deterministic parsers like LL(1).
+
+- Earley Parser: O(n^3) in the worst case, but typically O(n^2) or better for unambiguous grammars. Removing ambiguity and left recursion improves practical performance.
+- Recursive Descent Parser (LL(1)): O(n), where n is the length of the input string, since each token is processed once and the parser does not backtrack.
 
 ---
 
